@@ -4,8 +4,10 @@ java-callgraph: Java Call Graph Utilities
 A suite of programs for generating static and dynamic call graphs in Java.
 
 * javacg-static: Reads classes from a jar file, walks down the method bodies and
-   prints a table of caller-caller relationships.
-* javacg-dynamic: Runs as a [Java agent](http://download.oracle.com/javase/6/docs/api/index.html?java/lang/instrument/package-summary.html) and instruments
+  prints a table of caller-caller relationships.
+* javacg-dynamic: Runs as
+  a [Java agent](http://download.oracle.com/javase/6/docs/api/index.html?java/lang/instrument/package-summary.html) and
+  instruments
   the methods of a user-defined set of classes in order to track their invocations.
   At JVM exit, prints a table of caller-callee relationships, along with a number
   of calls
@@ -19,6 +21,7 @@ mvn install
 ```
 
 This will produce a `target` directory with the following three jars:
+
 - javacg-0.1-SNAPSHOT.jar: This is the standard maven packaged jar with static and dynamic call graph generator classes
 - `javacg-0.1-SNAPSHOT-static.jar`: This is an executable jar which includes the static call graph generator
 - `javacg-0.1-SNAPSHOT-dycg-agent.jar`: This is an executable jar which includes the dynamic call graph generator
@@ -48,11 +51,11 @@ The type of call can have one of the following values (refer to
 the [JVM specification](http://java.sun.com/docs/books/jvms/second_edition/html/Instructions2.doc6.html)
 for the meaning of the calls):
 
- * `M` for `invokevirtual` calls
- * `I` for `invokeinterface` calls
- * `O` for `invokespecial` calls
- * `S` for `invokestatic` calls
- * `D` for `invokedynamic` calls
+* `M` for `invokevirtual` calls
+* `I` for `invokeinterface` calls
+* `O` for `invokespecial` calls
+* `S` for `invokestatic` calls
+* `D` for `invokedynamic` calls
 
 For `invokedynamic` calls, it is not possible to infer the argument types.
 
@@ -133,6 +136,7 @@ Running the batik Dacapo benchmark:
 ```
 java -Xbootclasspath:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:jar/batik-all.jar:jar/xml-apis-ext.jar -javaagent:target/javacg-0.1-SNAPSHOT-dycg-agent.jar="incl=org.apache.batik.*,org.w3c.*;" -jar dacapo-9.12-bach.jar batik -s small |tail -n 10
 ```
+
 <br/>
 
 ```
@@ -152,6 +156,7 @@ Running the lucene Dacapo benchmark:
 ```
 java -Xbootclasspath:/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Classes/classes.jar:jar/lucene-core-2.4.jar:jar/luindex.jar -javaagent:target/javacg-0.1-SNAPSHOT-dycg-agent.jar="incl=org.apache.lucene.*;" -jar dacapo-9.12-bach.jar luindex -s small |tail -n 10
 ```
+
 <br/><br/>
 
 ```
@@ -175,7 +180,7 @@ org.apache.lucene.analysis.Token:termLength org.apache.lucene.analysis.Token:ini
 * The dynamic call graph generator will not work reliably (or at all) for
   multithreaded programs
 * The dynamic call graph generator does not handle exceptions very well, so some
-methods might appear as having never returned
+  methods might appear as having never returned
 
 #### Author
 

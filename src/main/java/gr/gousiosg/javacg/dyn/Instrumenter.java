@@ -28,6 +28,8 @@
 
 package gr.gousiosg.javacg.dyn;
 
+import javassist.*;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
@@ -37,12 +39,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-
-import javassist.CannotCompileException;
-import javassist.ClassPool;
-import javassist.CtBehavior;
-import javassist.CtClass;
-import javassist.NotFoundException;
 
 public class Instrumenter implements ClassFileTransformer {
 
@@ -101,8 +97,12 @@ public class Instrumenter implements ClassFileTransformer {
         instrumentation.addTransformer(new Instrumenter());
     }
 
+    private static void err(String msg) {
+        //System.err.println("[JAVACG-DYN] " + msg);
+    }
+
     public byte[] transform(ClassLoader loader, String className, Class<?> clazz,
-            java.security.ProtectionDomain domain, byte[] bytes) {
+                            java.security.ProtectionDomain domain, byte[] bytes) {
         boolean enhanceClass = false;
 
         String name = className.replace("/", ".");
@@ -173,9 +173,5 @@ public class Instrumenter implements ClassFileTransformer {
         method.insertBefore("gr.gousiosg.javacg.dyn.MethodStack.push(\"" + className
                 + ":" + methodName + "\");");
         method.insertAfter("gr.gousiosg.javacg.dyn.MethodStack.pop();");
-    }
-
-    private static void err(String msg) {
-        //System.err.println("[JAVACG-DYN] " + msg);
     }
 }

@@ -31,20 +31,15 @@ package gr.gousiosg.javacg.dyn;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class MethodStack {
 
-    private static Stack<String> stack = new Stack<>();
-    private static Map<Pair<String, String>, Integer> callgraph = new HashMap<>();
-    static FileWriter fw; 
+    static FileWriter fw;
     static StringBuffer sb;
     static long threadid = -1L;
+    private static Stack<String> stack = new Stack<>();
+    private static Map<Pair<String, String>, Integer> callgraph = new HashMap<>();
 
     static {
         Runtime.getRuntime().addShutdownHook(new Thread() {
@@ -80,10 +75,10 @@ public class MethodStack {
     public static void push(String callname) throws IOException {
         if (threadid == -1)
             threadid = Thread.currentThread().getId();
-        
+
         if (Thread.currentThread().getId() != threadid)
             return;
-        
+
         if (!stack.isEmpty()) {
             Pair<String, String> p = new Pair<>(stack.peek(), callname);
             if (callgraph.containsKey(p))

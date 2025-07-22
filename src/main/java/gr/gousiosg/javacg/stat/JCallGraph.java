@@ -28,6 +28,8 @@
 
 package gr.gousiosg.javacg.stat;
 
+import org.apache.bcel.classfile.ClassParser;
+
 import java.io.*;
 import java.util.*;
 import java.util.function.Function;
@@ -35,8 +37,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
-import org.apache.bcel.classfile.ClassParser;
 
 /**
  * Constructs a callgraph out of a JAR archive. Can combine multiple archives
